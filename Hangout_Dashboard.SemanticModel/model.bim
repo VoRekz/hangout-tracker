@@ -1,0 +1,884 @@
+{
+  "compatibilityLevel": 1606,
+  "model": {
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"PEOPLE\",\"EVENTS\",\"LEDGER\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "1"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "relationships": [
+      {
+        "name": "Rel_People_Ledger",
+        "fromColumn": "PERSONID",
+        "fromTable": "LEDGER",
+        "toColumn": "PERSONID",
+        "toTable": "PEOPLE"
+      },
+      {
+        "name": "Rel_Events_Ledger",
+        "fromColumn": "EVENTID",
+        "fromTable": "LEDGER",
+        "toColumn": "EVENTID",
+        "toTable": "EVENTS"
+      },
+      {
+        "name": "6656eee8-f706-4789-907f-690223a43e6b",
+        "fromColumn": "EVENTDATE",
+        "fromTable": "EVENTS",
+        "joinOnDateBehavior": "datePartOnly",
+        "toColumn": "Date",
+        "toTable": "LocalDateTable_c452ef95-9e47-4290-9334-84a270eeaa6e"
+      }
+    ],
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "PEOPLE",
+        "columns": [
+          {
+            "name": "PERSONID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "isNullable": false,
+            "lineageTag": "ecdb374e-8688-4e6b-8c13-90ea779e4064",
+            "sourceColumn": "PERSONID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "NAME",
+            "dataType": "string",
+            "lineageTag": "af13c996-51e4-450d-adde-b22c13616fb6",
+            "sourceColumn": "NAME"
+          }
+        ],
+        "lineageTag": "85ac81d1-4140-499f-b3a1-ea0148db2ba5",
+        "partitions": [
+          {
+            "name": "PEOPLE-Partition",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Snowflake.Databases(\"kdicljj-hs69473.snowflakecomputing.com\", \"COMPUTE_WH\", [Role=\"ACCOUNTADMIN\"]),",
+                "    HangoutTracker_Database = Source{[Name=\"HANGOUTTRACKER\",Kind=\"Database\"]}[Data],",
+                "    CORE_Schema = HangoutTracker_Database{[Name=\"CORE\",Kind=\"Schema\"]}[Data],",
+                "    Table_Data = CORE_Schema{[Name=\"PEOPLE\",Kind=\"Table\"]}[Data]",
+                "in",
+                "    Table_Data"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "EVENTS",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "EVENTID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "isNullable": false,
+            "lineageTag": "e8799de0-e341-4840-83c5-9e705ae87d0f",
+            "sourceColumn": "EVENTID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "EVENTDATE",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "e2520012-dc97-4afa-9f9e-9452720d3951",
+            "sourceColumn": "EVENTDATE",
+            "summarizeBy": "none",
+            "variations": [
+              {
+                "name": "Variation",
+                "defaultHierarchy": {
+                  "hierarchy": "Date Hierarchy",
+                  "table": "LocalDateTable_c452ef95-9e47-4290-9334-84a270eeaa6e"
+                },
+                "isDefault": true,
+                "relationship": "6656eee8-f706-4789-907f-690223a43e6b"
+              }
+            ]
+          },
+          {
+            "name": "LOCATION",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "2d86a93a-b2bc-4bbe-9820-f5bbe5e9ae13",
+            "sourceColumn": "LOCATION",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ADDRESS",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataCategory": "Address",
+            "dataType": "string",
+            "lineageTag": "a47adcb3-c963-43a4-aca9-1a3ed12094a1",
+            "sourceColumn": "ADDRESS",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "CATEGORY",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "27d557e9-71dd-4776-ba39-8e01b8912b0e",
+            "sourceColumn": "CATEGORY",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "TOTALCOST",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "double",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00",
+            "lineageTag": "1d7a7820-ae58-49b5-948b-e9b5d8f6adfc",
+            "sourceColumn": "TOTALCOST",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "SUGGESTEDBY",
+            "dataType": "string",
+            "sourceColumn": "SUGGESTEDBY"
+          }
+        ],
+        "lineageTag": "1ad6de14-d891-46ad-9d2a-6bf42433d1e2",
+        "measures": [
+          {
+            "name": "Total Spend",
+            "expression": "SUM(EVENTS[TOTALCOST])",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00"
+          },
+          {
+            "name": "Total Hangouts",
+            "expression": "COUNTROWS(EVENTS)"
+          },
+          {
+            "name": "Hangouts This Year",
+            "expression": [
+              "VAR CurrentYr = YEAR(TODAY())",
+              "RETURN",
+              "CALCULATE(",
+              "    COUNTROWS(EVENTS),",
+              "    YEAR(EVENTS[EVENTDATE]) = CurrentYr",
+              ")"
+            ]
+          },
+          {
+            "name": "Days Since Last Hangout",
+            "expression": [
+              "VAR LastHangout = MAX(EVENTS[EVENTDATE])",
+              "RETURN",
+              "IF (",
+              "    ISBLANK(LastHangout),",
+              "    \"No Data\",",
+              "    DATEDIFF(LastHangout, TODAY(), DAY) & \" days\"",
+              ")"
+            ]
+          },
+          {
+            "name": "Avg Hangout Cost",
+            "expression": "AVERAGE(EVENTS[TOTALCOST])",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00"
+          },
+          {
+            "name": "Top Spending Category",
+            "expression": "CALCULATE(SELECTEDVALUE(EVENTS[CATEGORY]), TOPN(1, ALL(EVENTS[CATEGORY]), [Total Spend], DESC))"
+          },
+          {
+            "name": "Total Locations",
+            "expression": "DISTINCTCOUNT(EVENTS[LOCATION])"
+          },
+          {
+            "name": "Least Suggested By",
+            "expression": [
+              "VAR SuggestionsTable = ",
+              "    ADDCOLUMNS(",
+              "        ALL(PEOPLE[NAME]),",
+              "        \"SuggestionCount\", ",
+              "        VAR PName = PEOPLE[NAME]",
+              "        RETURN",
+              "        COUNTROWS(FILTER(ALL(EVENTS), CONTAINSSTRING(EVENTS[SUGGESTEDBY], PName))) + 0",
+              "    )",
+              "VAR MinSuggestions = MINX(SuggestionsTable, [SuggestionCount])",
+              "VAR FilteredPeople = FILTER(SuggestionsTable, [SuggestionCount] = MinSuggestions)",
+              "RETURN",
+              "CONCATENATEX(FilteredPeople, PEOPLE[NAME], \", \") & \" (\" & MinSuggestions & \")\""
+            ]
+          },
+          {
+            "name": "Most Suggested By",
+            "expression": [
+              "VAR SuggestionsTable = ",
+              "    ADDCOLUMNS(",
+              "        ALL(PEOPLE[NAME]),",
+              "        \"SuggestionCount\", ",
+              "        VAR PName = PEOPLE[NAME]",
+              "        RETURN",
+              "        COUNTROWS(FILTER(ALL(EVENTS), CONTAINSSTRING(EVENTS[SUGGESTEDBY], PName))) + 0",
+              "    )",
+              "VAR MaxSuggestions = MAXX(SuggestionsTable, [SuggestionCount])",
+              "VAR FilteredPeople = FILTER(SuggestionsTable, [SuggestionCount] = MaxSuggestions)",
+              "RETURN",
+              "CONCATENATEX(FilteredPeople, PEOPLE[NAME], \", \") & \" (\" & MaxSuggestions & \")\""
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "EVENTS-Partition",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Snowflake.Databases(\"kdicljj-hs69473.snowflakecomputing.com\", \"COMPUTE_WH\", [Role=\"ACCOUNTADMIN\"]),",
+                "    HangoutTracker_Database = Source{[Name=\"HANGOUTTRACKER\",Kind=\"Database\"]}[Data],",
+                "    CORE_Schema = HangoutTracker_Database{[Name=\"CORE\",Kind=\"Schema\"]}[Data],",
+                "    Table_Data = CORE_Schema{[Name=\"EVENTS\",Kind=\"Table\"]}[Data]",
+                "in",
+                "    Table_Data"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "LEDGER",
+        "columns": [
+          {
+            "name": "LEDGERID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "isNullable": false,
+            "lineageTag": "692031de-e14e-45f4-ac44-b099950a7d81",
+            "sourceColumn": "LEDGERID",
+            "summarizeBy": "count"
+          },
+          {
+            "name": "EVENTID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "lineageTag": "300e7a9d-22e6-410a-b17c-d8d0361d365a",
+            "sourceColumn": "EVENTID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "PERSONID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "lineageTag": "aaab564f-cefe-4294-9615-affd368dd7a5",
+            "sourceColumn": "PERSONID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "AMOUNTPAID",
+            "dataType": "double",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00",
+            "lineageTag": "91fdeb43-fc43-47d7-beba-a141f9d540ec",
+            "sourceColumn": "AMOUNTPAID"
+          },
+          {
+            "name": "AMOUNTOWED",
+            "dataType": "double",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00",
+            "lineageTag": "54e86330-9a3e-440d-83d0-4bfe56f0c209",
+            "sourceColumn": "AMOUNTOWED"
+          }
+        ],
+        "lineageTag": "f93cc7c0-f888-4a6c-957c-b4496428d74a",
+        "measures": [
+          {
+            "name": "Total Paid",
+            "expression": "SUM(LEDGER[AMOUNTPAID])",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00"
+          },
+          {
+            "name": "Total Owed",
+            "expression": "SUM(LEDGER[AMOUNTOWED])",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00"
+          },
+          {
+            "name": "Net Balance",
+            "expression": "[Total Paid] - [Total Owed]",
+            "formatString": "$#,0.00;($#,0.00);$#,0.00"
+          },
+          {
+            "name": "Balance Status",
+            "expression": [
+              "VAR Net = [Net Balance]",
+              "RETURN",
+              "IF (",
+              "    ISBLANK(Net),",
+              "    \"-\",",
+              "    IF (",
+              "        Net > 0.009,",
+              "        \"\ud83d\udfe2 Owed $\" & FORMAT(Net, \"0.00\"),",
+              "        IF (",
+              "            Net < -0.009,",
+              "            \"\ud83d\udd34 Owes $\" & FORMAT(ABS(Net), \"0.00\"),",
+              "            \"\u26aa Settled\"",
+              "        )",
+              "    )",
+              ")"
+            ]
+          },
+          {
+            "name": "Balance Color Code",
+            "expression": [
+              "VAR Net = [Net Balance]",
+              "RETURN",
+              "IF (",
+              "    Net > 0.01,",
+              "    \"#10B981\",",
+              "    IF (",
+              "        Net < -0.01,",
+              "        \"#EF4444\",",
+              "        \"#6B7280\"",
+              "    )",
+              ")"
+            ]
+          },
+          {
+            "name": "Suggestions Count",
+            "expression": [
+              "VAR PName = SELECTEDVALUE(PEOPLE[NAME])",
+              "RETURN",
+              "COUNTROWS(FILTER(ALL(EVENTS), CONTAINSSTRING(EVENTS[SUGGESTEDBY], PName))) + 0"
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "LEDGER-Partition",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Snowflake.Databases(\"kdicljj-hs69473.snowflakecomputing.com\", \"COMPUTE_WH\", [Role=\"ACCOUNTADMIN\"]),",
+                "    HangoutTracker_Database = Source{[Name=\"HANGOUTTRACKER\",Kind=\"Database\"]}[Data],",
+                "    CORE_Schema = HangoutTracker_Database{[Name=\"CORE\",Kind=\"Schema\"]}[Data],",
+                "    Table_Data = CORE_Schema{[Name=\"LEDGER\",Kind=\"Table\"]}[Data]",
+                "in",
+                "    Table_Data"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "DateTableTemplate_ee7e2769-0a22-420f-b72d-246f287319a8",
+        "annotations": [
+          {
+            "name": "__PBI_TemplateDateTable",
+            "value": "true"
+          },
+          {
+            "name": "DefaultItem",
+            "value": "DateHierarchy"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataCategory": "PaddedDateTableDates",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "isNameInferred": true,
+            "lineageTag": "f614e85a-c81a-45a5-be2f-06f4371a4425",
+            "sourceColumn": "[Date]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          },
+          {
+            "name": "Year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ],
+            "dataCategory": "Years",
+            "dataType": "int64",
+            "expression": "YEAR([Date])",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "2dbe659e-ffd4-4db5-afae-474c4a45a573",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "MonthNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ],
+            "dataCategory": "MonthOfYear",
+            "dataType": "int64",
+            "expression": "MONTH([Date])",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "ca52ecee-e62e-4c33-934b-0079d2b7948d",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ],
+            "dataCategory": "Months",
+            "dataType": "string",
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "isHidden": true,
+            "lineageTag": "c14fb9b8-bdf4-409a-a446-8470042f0dbc",
+            "sortByColumn": "MonthNo",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "QuarterNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ],
+            "dataCategory": "QuarterOfYear",
+            "dataType": "int64",
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "1a5fcea4-1e42-4bc2-8f0d-8888b91ff1d6",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Quarter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ],
+            "dataCategory": "Quarters",
+            "dataType": "string",
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "isHidden": true,
+            "lineageTag": "ed220671-e3be-407a-a5ee-f8594790c250",
+            "sortByColumn": "QuarterNo",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Day",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ],
+            "dataCategory": "DayOfMonth",
+            "dataType": "int64",
+            "expression": "DAY([Date])",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "e590547b-48c1-4996-96ef-ece1dab5ed61",
+            "summarizeBy": "none",
+            "type": "calculated"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "annotations": [
+              {
+                "name": "TemplateId",
+                "value": "DateHierarchy"
+              }
+            ],
+            "levels": [
+              {
+                "name": "Year",
+                "column": "Year",
+                "lineageTag": "ef39acb6-530b-44e7-925f-4afa30f0ed2f",
+                "ordinal": 0
+              },
+              {
+                "name": "Quarter",
+                "column": "Quarter",
+                "lineageTag": "ab7b30f5-d19f-4d45-a807-81fdbb274975",
+                "ordinal": 1
+              },
+              {
+                "name": "Month",
+                "column": "Month",
+                "lineageTag": "70a8faa1-e61a-4508-8069-1dd7746c0219",
+                "ordinal": 2
+              },
+              {
+                "name": "Day",
+                "column": "Day",
+                "lineageTag": "8ab471c1-8b43-4e07-a5a5-ecbda7f51986",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "32c133a9-815c-495f-b91b-43688d43a1fc"
+          }
+        ],
+        "isHidden": true,
+        "isPrivate": true,
+        "lineageTag": "c07aaff0-3fe6-49a2-aa91-10e6969b611d",
+        "partitions": [
+          {
+            "name": "DateTableTemplate_ee7e2769-0a22-420f-b72d-246f287319a8",
+            "mode": "import",
+            "source": {
+              "expression": "Calendar(Date(2015,1,1), Date(2015,1,1))",
+              "type": "calculated"
+            }
+          }
+        ]
+      },
+      {
+        "name": "LocalDateTable_c452ef95-9e47-4290-9334-84a270eeaa6e",
+        "annotations": [
+          {
+            "name": "__PBI_LocalDateTable",
+            "value": "true"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataCategory": "PaddedDateTableDates",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "isNameInferred": true,
+            "lineageTag": "dc5d74e2-fcf7-4a0e-bac9-e6c700fee566",
+            "sourceColumn": "[Date]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          },
+          {
+            "name": "Year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ],
+            "dataCategory": "Years",
+            "dataType": "int64",
+            "expression": "YEAR([Date])",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "8887e00f-b473-4eae-9e45-3ef2fe2586f1",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "MonthNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ],
+            "dataCategory": "MonthOfYear",
+            "dataType": "int64",
+            "expression": "MONTH([Date])",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "3329627b-57de-4b57-aa76-438111ccd5e0",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ],
+            "dataCategory": "Months",
+            "dataType": "string",
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "isHidden": true,
+            "lineageTag": "5bdcd465-cc53-4111-a3bf-2a248cd7fdca",
+            "sortByColumn": "MonthNo",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "QuarterNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ],
+            "dataCategory": "QuarterOfYear",
+            "dataType": "int64",
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "8f19fde2-f324-473b-8119-1f7bdf910e2f",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Quarter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ],
+            "dataCategory": "Quarters",
+            "dataType": "string",
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "isHidden": true,
+            "lineageTag": "92c575a5-af81-4512-952a-68e98de95fb7",
+            "sortByColumn": "QuarterNo",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Day",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ],
+            "dataCategory": "DayOfMonth",
+            "dataType": "int64",
+            "expression": "DAY([Date])",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "b780276e-27f1-4974-be0b-fa1876f50f8e",
+            "summarizeBy": "none",
+            "type": "calculated"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "annotations": [
+              {
+                "name": "TemplateId",
+                "value": "DateHierarchy"
+              }
+            ],
+            "levels": [
+              {
+                "name": "Year",
+                "column": "Year",
+                "lineageTag": "71c5b5c1-caab-4c94-96c9-a700050166ec",
+                "ordinal": 0
+              },
+              {
+                "name": "Quarter",
+                "column": "Quarter",
+                "lineageTag": "b15925c8-f559-43ec-89f2-2f11b3c3d511",
+                "ordinal": 1
+              },
+              {
+                "name": "Month",
+                "column": "Month",
+                "lineageTag": "40ce202a-488c-4118-9155-ebfae6730b45",
+                "ordinal": 2
+              },
+              {
+                "name": "Day",
+                "column": "Day",
+                "lineageTag": "d59e2760-0fc3-4b40-a71f-daad73ba6a42",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "3d2cbb88-dd10-4f86-9ea3-88f38d5a35a7"
+          }
+        ],
+        "isHidden": true,
+        "lineageTag": "273ccc87-088f-4715-9387-fc279a7792a5",
+        "partitions": [
+          {
+            "name": "LocalDateTable_c452ef95-9e47-4290-9334-84a270eeaa6e",
+            "mode": "import",
+            "source": {
+              "expression": "Calendar(Date(Year(MIN('EVENTS'[EVENTDATE])), 1, 1), Date(Year(MAX('EVENTS'[EVENTDATE])), 12, 31))",
+              "type": "calculated"
+            }
+          }
+        ],
+        "showAsVariationsOnly": true
+      }
+    ]
+  }
+}

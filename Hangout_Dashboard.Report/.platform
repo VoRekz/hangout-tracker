@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Hangout_Dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ac0686d0-fae6-44d6-8a3a-1de2c70f2c2d"
+  }
+}

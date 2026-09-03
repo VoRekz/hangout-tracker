@@ -1,0 +1,87 @@
+{
+  "config": "{\"version\": \"5.53\", \"themeCollection\": {\"baseTheme\": {\"name\": \"CY24SU06\", \"version\": \"5.53\", \"type\": 2}}}",
+  "layoutOptimization": 0,
+  "sections": [
+    {
+      "name": "Section_Main_Dashboard",
+      "displayName": "Monthly Hangout & Social Tracker",
+      "filters": "[]",
+      "height": 720.0,
+      "width": 1280.0,
+      "visualContainers": [
+        {
+          "x": 20.0,
+          "y": 15.0,
+          "z": 0.0,
+          "width": 300.0,
+          "height": 50.0,
+          "config": "{\"name\": \"7039067e2a314d2f\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20, \"y\": 15, \"z\": 0, \"width\": 300, \"height\": 50}}], \"singleVisual\": {\"visualType\": \"slicer\", \"projections\": {\"Values\": [{\"queryRef\": \"EVENTS.CATEGORY\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"s\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"s\"}}, \"Property\": \"CATEGORY\"}, \"Name\": \"EVENTS.CATEGORY\", \"NativeReferenceName\": \"Category Filter\"}]}}}"
+        },
+        {
+          "x": 20.0,
+          "y": 75.0,
+          "z": 1.0,
+          "width": 295.0,
+          "height": 110.0,
+          "config": "{\"name\": \"80e9fad5d1544104\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20, \"y\": 75, \"z\": 1, \"width\": 295, \"height\": 110}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"EVENTS.Total Spend\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Total Spend\"}, \"Name\": \"EVENTS.Total Spend\", \"NativeReferenceName\": \"Total Spend\"}]}}}"
+        },
+        {
+          "x": 335.0,
+          "y": 75.0,
+          "z": 2.0,
+          "width": 295.0,
+          "height": 110.0,
+          "config": "{\"name\": \"63b488c5fb5f4874\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 335, \"y\": 75, \"z\": 2, \"width\": 295, \"height\": 110}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"EVENTS.Hangouts This Year\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Hangouts This Year\"}, \"Name\": \"EVENTS.Hangouts This Year\", \"NativeReferenceName\": \"Hangouts This Year\"}]}}}"
+        },
+        {
+          "x": 650.0,
+          "y": 75.0,
+          "z": 3.0,
+          "width": 295.0,
+          "height": 110.0,
+          "config": "{\"name\": \"f6a021ee4a774faa\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 650, \"y\": 75, \"z\": 3, \"width\": 295, \"height\": 110}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"EVENTS.Days Since Last Hangout\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Days Since Last Hangout\"}, \"Name\": \"EVENTS.Days Since Last Hangout\", \"NativeReferenceName\": \"Days Since Last Hangout\"}]}}}"
+        },
+        {
+          "x": 965.0,
+          "y": 75.0,
+          "z": 4.0,
+          "width": 295.0,
+          "height": 110.0,
+          "config": "{\"name\": \"cd09ce7c3f184ac5\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 965, \"y\": 75, \"z\": 4, \"width\": 295, \"height\": 110}}], \"singleVisual\": {\"visualType\": \"card\", \"projections\": {\"Values\": [{\"queryRef\": \"EVENTS.Least Suggested By\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"t\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"t\"}}, \"Property\": \"Least Suggested By\"}, \"Name\": \"EVENTS.Least Suggested By\", \"NativeReferenceName\": \"Least Suggested By\"}]}}}"
+        },
+        {
+          "x": 20.0,
+          "y": 205.0,
+          "z": 5.0,
+          "width": 460.0,
+          "height": 240.0,
+          "config": "{\"name\": \"9c9b87a56cdd40e2\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20, \"y\": 205, \"z\": 5, \"width\": 460, \"height\": 240}}], \"singleVisual\": {\"visualType\": \"donutChart\", \"projections\": {\"Category\": [{\"queryRef\": \"EVENTS.CATEGORY\"}], \"Y\": [{\"queryRef\": \"EVENTS.Total Spend\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"e\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"e\"}}, \"Property\": \"CATEGORY\"}, \"Name\": \"EVENTS.CATEGORY\", \"NativeReferenceName\": \"Category\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"e\"}}, \"Property\": \"Total Spend\"}, \"Name\": \"EVENTS.Total Spend\", \"NativeReferenceName\": \"Expenses by Category\"}]}}}"
+        },
+        {
+          "x": 20.0,
+          "y": 465.0,
+          "z": 6.0,
+          "width": 460.0,
+          "height": 235.0,
+          "config": "{\"name\": \"0b0ff5bcd5f44774\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20, \"y\": 465, \"z\": 6, \"width\": 460, \"height\": 235}}], \"singleVisual\": {\"visualType\": \"tableEx\", \"projections\": {\"Values\": [{\"queryRef\": \"PEOPLE.NAME\"}, {\"queryRef\": \"LEDGER.Total Paid\"}, {\"queryRef\": \"LEDGER.Total Owed\"}, {\"queryRef\": \"LEDGER.Net Balance\"}, {\"queryRef\": \"LEDGER.Balance Status\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"p\", \"Entity\": \"PEOPLE\", \"Type\": 0}, {\"Name\": \"l\", \"Entity\": \"LEDGER\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"p\"}}, \"Property\": \"NAME\"}, \"Name\": \"PEOPLE.NAME\", \"NativeReferenceName\": \"Category / Friend\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"l\"}}, \"Property\": \"Total Paid\"}, \"Name\": \"LEDGER.Total Paid\", \"NativeReferenceName\": \"Paid\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"l\"}}, \"Property\": \"Total Owed\"}, \"Name\": \"LEDGER.Total Owed\", \"NativeReferenceName\": \"Spent / Share\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"l\"}}, \"Property\": \"Net Balance\"}, \"Name\": \"LEDGER.Net Balance\", \"NativeReferenceName\": \"Variance\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"l\"}}, \"Property\": \"Balance Status\"}, \"Name\": \"LEDGER.Balance Status\", \"NativeReferenceName\": \"% Used / Status\"}]}}}"
+        },
+        {
+          "x": 500.0,
+          "y": 205.0,
+          "z": 7.0,
+          "width": 760.0,
+          "height": 240.0,
+          "config": "{\"name\": \"e40afc529b79492c\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 500, \"y\": 205, \"z\": 7, \"width\": 760, \"height\": 240}}], \"singleVisual\": {\"visualType\": \"lineChart\", \"projections\": {\"Category\": [{\"queryRef\": \"EVENTS.EVENTDATE\"}], \"Y\": [{\"queryRef\": \"EVENTS.Total Spend\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"e\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"e\"}}, \"Property\": \"EVENTDATE\"}, \"Name\": \"EVENTS.EVENTDATE\", \"NativeReferenceName\": \"Month / Date\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"e\"}}, \"Property\": \"Total Spend\"}, \"Name\": \"EVENTS.Total Spend\", \"NativeReferenceName\": \"Total Expenses\"}]}}}"
+        },
+        {
+          "x": 500.0,
+          "y": 465.0,
+          "z": 8.0,
+          "width": 760.0,
+          "height": 235.0,
+          "config": "{\"name\": \"a8b6afd39f214223\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 500, \"y\": 465, \"z\": 8, \"width\": 760, \"height\": 235}}], \"singleVisual\": {\"visualType\": \"clusteredColumnChart\", \"projections\": {\"Category\": [{\"queryRef\": \"EVENTS.CATEGORY\"}], \"Y\": [{\"queryRef\": \"EVENTS.Total Spend\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"e\", \"Entity\": \"EVENTS\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"e\"}}, \"Property\": \"CATEGORY\"}, \"Name\": \"EVENTS.CATEGORY\", \"NativeReferenceName\": \"Category\"}, {\"Measure\": {\"Expression\": {\"SourceRef\": {\"Source\": \"e\"}}, \"Property\": \"Total Spend\"}, \"Name\": \"EVENTS.Total Spend\", \"NativeReferenceName\": \"Total Expenses\"}]}}}"
+        }
+      ]
+    }
+  ]
+}
