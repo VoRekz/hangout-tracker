@@ -84,7 +84,7 @@ def get_engine():
     engine_url = f"snowflake://{USER}:{PASSWORD}@{ACCOUNT}/{DATABASE}/{SCHEMA}?warehouse={WAREHOUSE}&role={ROLE}"
     return create_engine(engine_url)
 
-@st.cache_data(ttl=60)
+@st.cache_data(ttl=10)
 def fetch_data():
     engine = get_engine()
     events_df = pd.read_sql("SELECT * FROM Events ORDER BY EventDate ASC", engine)
@@ -101,12 +101,18 @@ except Exception as e:
 # ==========================================
 # 3. HEADER & QUICK ACTION
 # ==========================================
-col_h1, col_h2 = st.columns([3, 1])
+col_h1, col_h2, col_h3 = st.columns([3, 1, 1])
 with col_h1:
     st.title("Monthly Hangout & Social Tracker")
     st.caption("Live social outing expenses, fair splits, and hangout suggestions")
 
 with col_h2:
+    st.write("")
+    if st.button("🔄 Refresh Data", use_container_width=True):
+        st.cache_data.clear()
+        st.rerun()
+
+with col_h3:
     st.write("")
     form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeCGstKbFpj3Is7mMxd2WDQ0s7x2RvSvav-w12x45U6hQVi6g/viewform"
     st.link_button("📱 Log New Outing", form_url, use_container_width=True, type="primary")
