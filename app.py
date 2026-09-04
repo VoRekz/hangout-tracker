@@ -190,6 +190,16 @@ st.write("")
 # ==========================================
 col_left, col_right = st.columns([4, 6])
 
+# Category color mapping (including Gaming)
+CATEGORY_COLORS = {
+    'Dining': '#10B981',        # Emerald Green
+    'Entertainment': '#6366F1', # Indigo
+    'Gaming': '#8B5CF6',        # Violet / Electric Purple
+    'Groceries': '#F59E0B',     # Amber
+    'Travel': '#0EA5E9',        # Sky Blue
+    'Other': '#64748B'          # Slate Gray
+}
+
 # --- LEFT COLUMN: Category Donut & Balance Sheet ---
 with col_left:
     st.subheader("Expenses by Category")
@@ -200,7 +210,8 @@ with col_left:
             values='totalcost', 
             names='category', 
             hole=0.6,
-            color_discrete_sequence=px.colors.qualitative.Prism
+            color='category',
+            color_discrete_map=CATEGORY_COLORS
         )
         fig_donut.update_traces(textposition='inside', textinfo='percent+label')
         fig_donut.update_layout(margin=dict(t=10, b=10, l=10, r=10), showlegend=True, height=260)
@@ -263,7 +274,7 @@ with col_right:
             y='totalcost',
             color='category',
             labels={'location': 'Hangout Spot', 'totalcost': 'Total Bill ($)'},
-            color_discrete_sequence=px.colors.qualitative.Safe
+            color_discrete_map=CATEGORY_COLORS
         )
         fig_bar.update_layout(margin=dict(t=10, b=20, l=20, r=10), height=260)
         st.plotly_chart(fig_bar, use_container_width=True)
@@ -271,18 +282,29 @@ with col_right:
 # ==========================================
 # 7. RECENT HANGOUT ACTIVITY LOG
 # ==========================================
-with st.expander("📋 Full Hangout History Log", expanded=False):
+with st.expander("📋 Full Hangout History Log", expanded=True):
     if not events_df.empty:
         display_events = events_df.copy()
         display_events['eventdate'] = display_events['eventdate'].dt.strftime('%Y-%m-%d')
         display_events['totalcost'] = display_events['totalcost'].apply(lambda x: f"${x:,.2f}")
+        
+        # Merge attendees and payer from Ledger
+        merged_ledger = ledger_df.merge(people_df, on='personid')
+        attendees_by_event = merged_ledger.groupby('eventid')['name'].apply(lambda names: ', '.join(sorted(names))).to_dict()
+        payers_by_event = merged_ledger[merged_ledger['amountpaid'] > 0].set_index('eventid')['name'].to_dict()
+        
+        display_events['Attendees'] = display_events['eventid'].map(attendees_by_event).fillna('None')
+        display_events['Paid By'] = display_events['eventid'].map(payers_by_event).fillna('Unknown')
+        
         display_events.rename(columns={
             'eventdate': 'Date',
             'location': 'Spot Name',
             'category': 'Category',
             'totalcost': 'Total Bill',
             'suggestedby': 'Suggested By',
-            'address': 'Location / City'
+            'address': 'Address / City'
         }, inplace=True)
-        cols_to_show = [c for c in ['Date', 'Spot Name', 'Category', 'Total Bill', 'Suggested By', 'Location / City'] if c in display_events.columns]
+        
+        cols_to_show = ['Date', 'Spot Name', 'Category', 'Total Bill', 'Paid By', 'Attendees', 'Suggested By', 'Address / City']
+        cols_to_show = [c for c in cols_to_show if c in display_events.columns]
         st.dataframe(display_events[cols_to_show].sort_values('Date', ascending=False), hide_index=True, use_container_width=True)

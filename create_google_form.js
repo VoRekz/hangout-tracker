@@ -33,7 +33,7 @@ function createHangoutFormAndSheet() {
   // Field 4: Category
   form.addListItem()
       .setTitle('Category')
-      .setChoiceValues(['Dining', 'Entertainment', 'Groceries', 'Travel', 'Other'])
+      .setChoiceValues(['Dining', 'Entertainment', 'Gaming', 'Groceries', 'Travel', 'Other'])
       .setRequired(true);
 
   // Field 5: TotalCost
