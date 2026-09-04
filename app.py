@@ -131,10 +131,11 @@ else:
     hangouts_count = 0
     since_last_str = "No Data"
 
-# Least Suggested By calculation
+# Least Suggested By calculation (excluding 'Other' and 'Unknown')
 if not events_df.empty and not people_df.empty and 'suggestedby' in events_df.columns:
     sugg_counts = {}
-    for _, person in people_df.iterrows():
+    valid_people = people_df[~people_df['name'].astype(str).str.strip().str.lower().isin(['other', 'unknown', 'none'])]
+    for _, person in valid_people.iterrows():
         pname = person['name']
         # Check if name is contained in suggestedby
         count = events_df['suggestedby'].fillna('').apply(lambda s: pname.lower() in s.lower()).sum()
@@ -200,7 +201,7 @@ CATEGORY_COLORS = {
     'Other': '#64748B'          # Slate Gray
 }
 
-# --- LEFT COLUMN: Category Donut & Balance Sheet ---
+# --- LEFT COLUMN: Category Donut & Collective Event Spend ---
 with col_left:
     st.subheader("Expenses by Category")
     if not events_df.empty:
@@ -219,49 +220,52 @@ with col_left:
     else:
         st.info("No expense data recorded yet.")
 
-    st.subheader("Friend Balances & Settlements")
-    balance_records = []
-    for _, person in people_df.iterrows():
-        pid = person['personid']
-        pname = person['name']
-        paid = float(ledger_df[ledger_df['personid'] == pid]['amountpaid'].sum())
-        owed = float(ledger_df[ledger_df['personid'] == pid]['amountowed'].sum())
-        net = round(paid - owed, 2)
+    st.subheader("Collective Event Spending")
+    if not events_df.empty:
+        merged_ledger = ledger_df.merge(people_df, on='personid')
+        attendee_counts = merged_ledger.groupby('eventid')['name'].nunique().to_dict()
+        payers_by_event = merged_ledger[merged_ledger['amountpaid'] > 0].set_index('eventid')['name'].to_dict()
         
-        if net > 0.01:
-            status = f"🟢 Owed ${net:,.2f}"
-        elif net < -0.01:
-            status = f"🔴 Owes ${abs(net):,.2f}"
-        else:
-            status = "⚪ Settled"
+        event_summary = []
+        for _, ev in events_df.sort_values('eventdate', ascending=False).iterrows():
+            eid = ev['eventid']
+            num_attendees = attendee_counts.get(eid, 1)
+            cost = float(ev['totalcost'])
+            per_person = round(cost / num_attendees, 2) if num_attendees > 0 else cost
+            edate = ev['eventdate'].strftime('%m/%d/%y')
             
-        balance_records.append({
-            "Friend": pname,
-            "Total Paid": f"${paid:,.2f}",
-            "Fair Share": f"${owed:,.2f}",
-            "Net Balance": f"${net:,.2f}",
-            "Status": status
-        })
-    
-    bdf = pd.DataFrame(balance_records)
-    st.dataframe(bdf, hide_index=True, use_container_width=True)
+            event_summary.append({
+                "Spot Name": ev['location'],
+                "Date": edate,
+                "Category": ev['category'],
+                "Collective Spend": f"${cost:,.2f}",
+                "Cost / Person": f"${per_person:,.2f}",
+                "Attendees": num_attendees,
+                "Covered By": payers_by_event.get(eid, 'Unknown')
+            })
+        
+        bdf = pd.DataFrame(event_summary)
+        st.dataframe(bdf, hide_index=True, use_container_width=True)
+    else:
+        st.info("No events logged yet.")
 
 # --- RIGHT COLUMN: Spend Over Time & Bar Chart ---
 with col_right:
-    st.subheader("Hangout Spend by Month")
+    st.subheader("Hangout Spend Over Time")
     if not events_df.empty:
-        trend_df = events_df.copy()
-        trend_df['MonthYear'] = trend_df['eventdate'].dt.strftime('%Y-%m')
-        monthly_df = trend_df.groupby('MonthYear', as_index=False)['totalcost'].sum()
+        trend_df = events_df.copy().sort_values('eventdate')
+        trend_df['DateStr'] = trend_df['eventdate'].dt.strftime('%m/%d/%y')
+        daily_df = trend_df.groupby('DateStr', as_index=False, sort=False)['totalcost'].sum()
         
         fig_line = px.line(
-            monthly_df, 
-            x='MonthYear', 
+            daily_df, 
+            x='DateStr', 
             y='totalcost',
             markers=True,
-            labels={'MonthYear': 'Month', 'totalcost': 'Spend ($)'},
+            labels={'DateStr': 'Date (MM/DD/YY)', 'totalcost': 'Collective Spend ($)'},
             color_discrete_sequence=['#4F46E5']
         )
+        fig_line.update_xaxes(type='category')
         fig_line.update_layout(margin=dict(t=10, b=20, l=20, r=10), height=260)
         st.plotly_chart(fig_line, use_container_width=True)
 
@@ -285,7 +289,7 @@ with col_right:
 with st.expander("📋 Full Hangout History Log", expanded=True):
     if not events_df.empty:
         display_events = events_df.copy()
-        display_events['eventdate'] = display_events['eventdate'].dt.strftime('%Y-%m-%d')
+        display_events['eventdate'] = display_events['eventdate'].dt.strftime('%m/%d/%y')
         display_events['totalcost'] = display_events['totalcost'].apply(lambda x: f"${x:,.2f}")
         
         # Merge attendees and payer from Ledger
